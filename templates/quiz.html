@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <title>Guess that</title>
+</head>
+<body>
+    <h1>Guess That!</h1>
+    <form action="/submit" method="post">
+            <p>{{ question['text'] }}</p>
+            <input type="hidden" name="correct_answer" value="{{ question['answer'] }}">
+            <label>
+                <input type="submit" name="answer" value="True">
+
+            </label>
+            <label>
+                <input type="submit" name="answer" value="False">
+
+            </label>
+            <br>
+
+    </form>
+    <p>Score: {{score}}</p>
+</body>
+</html>
