@@ -1,26 +1,13 @@
 from flask import Flask, request, render_template
-import random
 from data import question_data
+import questions
 
 
 
 
 app = Flask(__name__)
 score = 0
-questions = question_data
-
-
-def get_question():
-    if len(questions) < 1:
-        return "Game Complete"
-    else:
-        question = (random.choice(questions))
-        questions.remove(question)
-        return question
-
-
-
-
+questions_list = question_data
 
 
 
@@ -28,21 +15,23 @@ def get_question():
 @app.route('/')
 def quiz():
 
-    question = (get_question())
+    question = (questions.get_question(questions_list))
     return render_template('quiz.html', question=question, score=score)
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    question = (get_question())
-    user_answer = request.form['answer']
-    correct_answer = request.form['correct_answer']
-    if user_answer == correct_answer:
-        global score
-        score += 1
+    global score
+    score = questions.check_answer(request,score)
+    if questions.questions_left(questions_list):
+        question = (questions.get_question(questions_list))
 
         return render_template('quiz.html', question=question, score=score)
     else:
-        return render_template('quiz.html', question=question, score=score)
+        return render_template("result.html",score=score)
+
+
+
+
 
 
 
