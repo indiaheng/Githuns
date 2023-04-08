@@ -15,9 +15,9 @@ def menu():
     return render_template('menu.html', categories=categories)
 
 
-@app.route("/start")
-def start():
-    return render_template('start.html')
+@app.route("/start/<category>")
+def start(category):
+    return render_template('start.html', category=category)
 
 
 # run the app in debug mode
