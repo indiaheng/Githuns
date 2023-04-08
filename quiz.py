@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from data import question_data
 import questions
-
+import csv
 
 
 
@@ -21,13 +21,18 @@ def quiz():
 @app.route('/submit', methods=['POST'])
 def submit():
     global score
-    score = questions.check_answer(request,score)
-    if questions.questions_left(questions_list):
+    score, q_result = questions.check_answer(request,score)
+    if questions.questions_left(questions_list) == True:
         question = (questions.get_question(questions_list))
 
-        return render_template('quiz.html', question=question, score=score)
+        return render_template('quiz.html', question=question, score=score, result=q_result)
     else:
-        return render_template("result.html",score=score)
+        with open("score.csv", mode="w", newline='') as data:
+            writer = csv.writer(data)
+            writer.writerow(f"{score}")
+            return render_template("result.html",score=score)
+
+
 
 
 

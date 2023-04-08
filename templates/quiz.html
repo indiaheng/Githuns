@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>Guess That!</h1>
+    <p> Answer : {{result}}</p>
     <form action="/submit" method="post">
             <p>{{ question['text'] }}</p>
             <input type="hidden" name="correct_answer" value="{{ question['answer'] }}">
