@@ -27,10 +27,22 @@ def submit():
 
         return render_template('quiz.html', question=question, score=score, result=q_result)
     else:
-        with open("score.csv", mode="w", newline='') as data:
-            writer = csv.writer(data)
-            writer.writerow(f"{score}")
-            return render_template("result.html",score=score)
+        highest_score = 0
+        with open("score.csv", mode="r", newline='') as data:
+            writer = csv.reader(data)
+            for row in writer:
+                row_score = int(row[0])
+
+
+                if row_score > highest_score:
+                    highest_score = row_score
+        if score > highest_score:
+            with open("score.csv", mode="w", newline='') as data:
+                writer = csv.writer(data)
+                writer.writerow(f"{score}")
+        return render_template("result.html", score=score)
+
+
 
 
 
