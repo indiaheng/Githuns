@@ -1,11 +1,9 @@
 import random
-from flask import request
+
 
 
 def questions_left(questions_list):
-    if len(questions_list) < 1:
-
-
+    if len(questions_list) == 0:
         return False
     else:
         return True
