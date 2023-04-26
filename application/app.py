@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import pymysql.cursors
-from sqlalchemy import true
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
 
@@ -20,35 +20,32 @@ currentUser = ''
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
+    print('function called')
+    # print(request.form['name'])
     if request.method == 'POST' and 'name' in request.form:
+
         # fetch the form data - the user's name
-        if 'name' == '':
-            name = 'Quiz Master'
-
         username = request.form['name']
-        print("hello")
-
-        connection.ping(reconnect=True)
 
         # save name to the db
-        with connection:
-            with connection.cursor() as cursor:
-            #    Insert form data into database
-                sql = "INSERT INTO scores(name) VALUES (%s)"
-                cursor.execute(sql, username)
-            #     commit connection to save changes to the database
-            connection.commit()
-            currentUser = username
-            connection.close()
+        try:
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = "INSERT INTO `scores`(`name`) VALUE (%s)"
+                    cursor.execute(sql, username)
+                connection.commit()
+        except Exception as e:
+            print(e)
 
-    print(currentUser)
-    return render_template('home.html')
+        return redirect(url_for('menu'))
+    else:
+        return render_template('home.html')
 
 
 @app.route("/menu", methods=['GET', 'POST'])
 def menu():
     connection.ping(reconnect=True)
-    #     select name from db
+    #     select username from db
     with connection:
         with connection.cursor() as cursor:
             sql = "SELECT name FROM scores ORDER BY ID DESC LIMIT 1"
@@ -62,8 +59,7 @@ def menu():
 @app.route("/start/<category>")
 def start(category):
     connection.ping(reconnect=True)
-
-    #     select name from db
+    #     select username from db
     with connection:
         with connection.cursor() as cursor:
             sql = "SELECT name FROM scores ORDER BY ID DESC LIMIT 1"
@@ -75,7 +71,6 @@ def start(category):
 
 
 # run the app in debug mode
-# so app reloads when changes have been made
 if __name__ == "__main__":
     # dbconnect()
     app.run(debug=True)
