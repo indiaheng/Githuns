@@ -22,8 +22,13 @@ currentUser = ''
 def home():
     if request.method == 'POST' and 'name' in request.form:
         # fetch the form data - the user's name
-        username = request.form['name']
+        if 'name' == '':
+            name = 'Quiz Master'
 
+        username = request.form['name']
+        print("hello")
+
+        connection.ping(reconnect=True)
 
         # save name to the db
         with connection:
@@ -33,6 +38,8 @@ def home():
                 cursor.execute(sql, username)
             #     commit connection to save changes to the database
             connection.commit()
+            currentUser = username
+            connection.close()
 
     print(currentUser)
     return render_template('home.html')
@@ -44,7 +51,7 @@ def menu():
     #     select name from db
     with connection:
         with connection.cursor() as cursor:
-            sql = "SELECT name FROM scores"
+            sql = "SELECT name FROM scores ORDER BY ID DESC LIMIT 1"
             cursor.execute(sql)
             result = cursor.fetchone()
             currentUser = result
@@ -59,7 +66,7 @@ def start(category):
     #     select name from db
     with connection:
         with connection.cursor() as cursor:
-            sql = "SELECT name FROM scores"
+            sql = "SELECT name FROM scores ORDER BY ID DESC LIMIT 1"
             cursor.execute(sql)
             result = cursor.fetchone()
             currentUser = result
