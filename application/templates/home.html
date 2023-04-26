@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+  <h1> Homepage</h1>
+    <!--    name input - to connect to database -->
+    <h3> Please Enter your name:</h3>
+    <form method="POST" action="{{ url_for('menu') }}">
+        Name <input type="text" name="name"/>
+        <input type="submit"/>
+    </form>
+</body>
+</html>
