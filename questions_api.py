@@ -1,18 +1,22 @@
 import requests
 
-response = requests.get("https://opentdb.com/api.php?amount=10&type=boolean", params="parameters")
+import html
+import json
 
-parameters = {"amount":10,
-               "type": "boolean",
-               }
 
-def get_q():
-    response.raise_for_status()
+def get_questions(difficulty,category,):
+    response = requests.get(
+        f'https://opentdb.com/api.php?amount=40&category={category}&difficulty={difficulty}')
     data = response.json()
     questions_list = []
-    for question in (data["results"]):
-        question_data = {}
-        question_data["text"] = (question["question"])
-        question_data["answer"] = question["correct_answer"]
-        questions_list.append(question_data)
-    return (questions_list)
+    for question in data["results"]:
+        if question["type"] == "multiple":
+            question_data = {}
+            question_data["text"] = html.unescape(question["question"])
+            question_data["answer"] = html.unescape(question["correct_answer"])
+            answer_list = html.unescape(question["incorrect_answers"])
+            answer_list.append(question["correct_answer"])
+            answer_list.sort()
+            question_data["answers"] = answer_list
+            questions_list.append(question_data)
+    return(questions_list)

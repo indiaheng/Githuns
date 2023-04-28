@@ -2,25 +2,39 @@
 <html>
 <head>
     <title>Guess that</title>
-    <link rel="icon" href="img.png">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+
+
 </head>
 <body>
     <h1>Guess That!</h1>
     <p> Answer : {{result}}</p>
+    <div>
     <form action="/submit" method="post">
             <p>{{ question['text'] }}</p>
             <input type="hidden" name="correct_answer" value="{{ question['answer'] }}">
             <label>
-                <input type="submit" name="answer" value="True">
+                <input type="submit" name="answer" value="{{question['answers'][0]}}">
 
             </label>
             <label>
-                <input type="submit" name="answer" value="False">
+                <input type="submit" name="answer" value="{{question['answers'][1]}}">
+
+            </label>
+        <label>
+                <input type="submit" name="answer" value="{{question['answers'][2]}}">
+
+            </label>
+        <label>
+                <input type="submit" name="answer" value="{{question['answers'][3]}}">
 
             </label>
             <br>
+        </form>
+    </div>
 
-    </form>
+
     <p>Score: {{score}}</p>
+    <p>Lives: {{lives}}</p>
 </body>
 </html>
