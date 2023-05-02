@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homepage</title>
+  <link rel="stylesheet" href="homepage.css">
+   <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Quicksand';font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- GitHuns Logo -->
+<div class="modal-content">
+  <form class="modal-content animate" method="post" action="/home-page-with-flask/test.html">
+    <div class="imgcontainer">
+      <img src="https://i.ibb.co/2gxJQK7/Screenshot-2023-04-30-at-19-50-51.png" alt="Screenshot-2023-04-30-at-19-50-51" class="avatar">
+    </div>
+
+    <!-- Login section -->
+    <div class="container">
+      <label for="username"><b>Username</b></label>
+      <input type="text" id="username" name="username" placeholder="Enter Username" pattern="^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z].*[A-Za-z])(?=.*[\d\W]*).*$" title="Username must contain four letters" required>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+      <button type="submit">Login</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
