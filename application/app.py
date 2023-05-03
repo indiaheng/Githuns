@@ -39,7 +39,15 @@ def return_home():
 
 @app.route('/leaderboard', methods=['POST'])
 def leaderboard():
-    return render_template('leaderboard.html')
+    connection.ping(reconnect=True)
+    with connection:
+        with connection.cursor() as cursor:
+            sql = "SELECT name, score FROM scores ORDER BY score DESC;"
+            cursor.execute(sql)
+            leaderboard = cursor.fetchall()
+            print(leaderboard)
+    return render_template('leaderboard.html', leaderboard=leaderboard)
+
 
 if __name__ == '__main__':
     app.run()
