@@ -11,12 +11,12 @@ connection = pymysql.connect(host="localhost",
                              database="githuns",
                              charset="utf8mb4",
                              cursorclass=pymysql.cursors.DictCursor)
-class ScoreKeeper:
-    def __init__(self):
-        self.score = 0
-
-    def add_points(self, points):
-        self.score += points
+# class ScoreKeeper:
+#     def __init__(self):
+#         self.score = 0
+#
+#     def add_points(self, points):
+#         self.score += points
 
 @app.route('/score')
 # need to add parameters, so that it looks for the right variables
@@ -36,6 +36,10 @@ def display_scores():
 @app.route('/return_home', methods=['POST'])
 def return_home():
     return redirect(url_for('home'))
+
+@app.route('/leaderboard', methods=['POST'])
+def leaderboard():
+    return render_template('leaderboard.html')
 
 if __name__ == '__main__':
     app.run()
