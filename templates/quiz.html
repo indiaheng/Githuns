@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Guess that</title>
-    <link href="styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
 
 </head>
@@ -13,7 +13,19 @@
     <form action="/submit" method="post">
             <p>{{ question['text'] }}</p>
             <input type="hidden" name="correct_answer" value="{{ question['answer'] }}">
-            <label>
+
+
+        <div class="input-container">
+        <input type="submit"  name="answer" value="{{question['answers'][0]}}">
+        <div class="radio-tile">
+          <label>{{question['answers'][0]}}</label>
+        </div>
+
+
+
+
+
+        <label>
                 <input type="submit" name="answer" value="{{question['answers'][0]}}">
 
             </label>
@@ -29,6 +41,11 @@
                 <input type="submit" name="answer" value="{{question['answers'][3]}}">
 
             </label>
+
+
+
+
+
             <br>
         </form>
     </div>

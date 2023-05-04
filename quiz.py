@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template
 
+
+
 import questions_api
 from questions import get_question, check_answer,  questions_left
 import csv
@@ -60,6 +62,13 @@ def choices():
 @app.route('/bug_report', methods=["GET"])
 def bug_report():
     return render_template('report_bug.html')
+
+@app.route('/submit_bug', methods=["POST"])
+def bug_submit():
+    if request.method == ["POST"]:
+        pass
+
+
 
 
 
